@@ -1,0 +1,37 @@
+.main {
+    &__block {
+        transition: 0.3s;
+        border: 0px transparent;
+        background: lightcyan;
+        border-radius: 10px;
+        position: relative;
+    }
+    
+    &__block:hover {
+        transition: 0.3s;
+        transform: scale(1.05);
+        outline: 1px solid grey;
+    }
+    
+    &__title {
+        position: absolute;
+        top: 5px;
+        left: 5px;
+        font-weight: 600;
+        display: flex;
+        align-items: center;
+    }
+
+    &__title img {
+        margin: 0 0 0 5px;
+    }
+    
+    &__content {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        height: 100%;
+        font-weight: 700;
+        font-size: 18px;
+    }
+}
