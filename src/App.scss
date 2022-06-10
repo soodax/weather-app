@@ -1,4 +1,15 @@
 .App {
-    background: url(./assets/images/bg.jpg) center no-repeat;
-    background-size: cover;
+    // background: url(./assets/images/bg.jpg) center no-repeat;
+    // background-size: cover;
+}
+
+.wrapper {
+    padding: 10px;
+    margin: 0 auto;
+    max-width: 1200px;
+    min-height: 100vh;
+
+    @media (max-width: 900px) {
+        padding: 20px;
+    }
 }

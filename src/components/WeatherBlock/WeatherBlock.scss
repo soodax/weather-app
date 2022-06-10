@@ -1,37 +1,120 @@
-.main {
+.weatherBlock {
     &__block {
         transition: 0.3s;
+        background: rgb(250, 255, 255);
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
         border: 0px transparent;
-        background: lightcyan;
-        border-radius: 10px;
-        position: relative;
+        border-radius: 5px;
+        padding: 5px;
+        box-shadow: 2px 2px 2px rgb(230, 235, 235);
+        width: 100%;
+        margin: 0 5px 0 0px;
+        @media (max-width: 900px) {
+            margin: 0 0 10px 0;
+            padding: 10px 5px;
+        }
+        
     }
-    
+
+    &__block:last-child {
+        margin: 0;
+    }
+
     &__block:hover {
         transition: 0.3s;
         transform: scale(1.05);
-        outline: 1px solid grey;
-    }
-    
-    &__title {
-        position: absolute;
-        top: 5px;
-        left: 5px;
-        font-weight: 600;
-        display: flex;
-        align-items: center;
+        outline: 1px solid lightblue;
     }
 
-    &__title img {
-        margin: 0 0 0 5px;
+    &__description {
+        color: darkslategray;
+        font-weight: 500;
+        text-align: center;
     }
-    
-    &__content {
+
+    &__title {
         display: flex;
+        flex-direction: column;
         align-items: center;
         justify-content: center;
-        height: 100%;
-        font-weight: 700;
         font-size: 18px;
+        font-weight: 600;
+        color: darkslategrey;
     }
+
+    &__content {
+        display: flex;
+        flex-direction: column;
+        
+        justify-content: center;
+        
+
+        // @media (max-width: 900px) {
+        //     padding: 0px 20px;
+        // }
+    }
+
+    &__shortList {
+        // width: 100%;
+    }
+
+    &__fullList {
+        // width: 100%;
+    }
+
+    &__shortList li {
+        margin: 10px;
+        font-size: 14px;
+        color: darkslategrey;
+        display: flex;
+        justify-content: space-between;
+
+        span {
+            color: darkcyan;
+            font-weight: 500;
+            margin: 0 0 0 5px;
+        }
+    }
+
+    &__fullList li{
+        margin: 10px;
+        font-size: 14px;
+        color: darkslategrey;
+        display: flex;
+        justify-content: space-between;
+
+        span {
+            color: darkcyan;
+            font-weight: 500;
+            margin: 0 0 0 5px;
+        }
+    }
+
+    &__fullList li {
+        margin-top: 0;
+    }
+
+    &__btn {
+        transition: 0.3s;
+        width: 100%;
+        background: lightblue;
+        color: darkslategrey;
+        font-weight: 500;
+        padding: 5px;
+        border: 0px transparent;
+        border-radius: 5px;
+    }
+
+    &__btn:hover {
+        transition: 0.3s;
+        background: darkcyan;
+        color: white
+    }
+}
+
+.hideList {
+    display: none;
 }
