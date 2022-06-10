@@ -12,6 +12,7 @@
         box-shadow: 2px 2px 2px rgb(230, 235, 235);
         width: 100%;
         margin: 0 5px 0 0px;
+    
         @media (max-width: 900px) {
             margin: 0 0 10px 0;
             padding: 10px 5px;
@@ -106,12 +107,26 @@
         padding: 5px;
         border: 0px transparent;
         border-radius: 5px;
+        font-size: 14px;
     }
 
     &__btn:hover {
         transition: 0.3s;
         background: darkcyan;
         color: white
+    }
+
+    &__date {
+        text-align: center;
+        width: 100%;
+        color: darkslategrey;
+        font-weight: 500;
+        margin: 0 0 20px 0;
+        font-size: 16px;
+        background: lightblue;
+        padding: 5px;
+        border: 0px transparent;
+        border-radius: 5px;
     }
 }
 

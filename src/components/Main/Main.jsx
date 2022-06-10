@@ -20,7 +20,10 @@ const Main = (props) => {
     let currentCity = 'Moscow';
     const api = 'd779f17843098d3158c1d2a9115ce239';
     let arr = [];
+    let currentDate;
+    
     const searchCity = () => {
+        
         axios.get(`https://api.openweathermap.org/geo/1.0/direct?q=${currentCity}&appid=${api}`).then(city => {
             axios.get(`https://api.openweathermap.org/data/2.5/weather?lat=${city.data[0].lat}&lon=${city.data[0].lon}&appid=${api}&units=metric`).then(response => {
                 setCurrentWeather(response)
@@ -30,9 +33,13 @@ const Main = (props) => {
                     arr[i] = response.data.daily[i]
                 }
                 setWeather(arr)
+                
             })
         })
+        
     }
+
+
 
     useEffect(() => {
         searchCity(currentCity)
@@ -40,6 +47,32 @@ const Main = (props) => {
 
     if (!weather) {
         return <div>loading...</div>
+    }
+
+    if (weather) {
+        switch (new Date(weather[0].dt * 1000).getDay()) {
+            case 1:
+                currentDate = 'Monday';
+                break;
+            case 2:
+                currentDate = 'Tuesday';
+                break;
+            case 3:
+                currentDate = 'Wednesday';
+                break;
+            case 4:
+                currentDate = 'Thursday';
+                break;
+            case 5:
+                currentDate = 'Friday';
+                break;
+            case 6:
+                currentDate = 'Saturday';
+                break;
+            case 0:
+                currentDate = 'Sunday';
+                break;   
+        }
     }
 
     const onChangeCity = (e) => {
@@ -61,8 +94,11 @@ const Main = (props) => {
             <div className="content__row content__current">
                 {console.log(weather)}
                 {console.log(currentWeather)}
+     
                 <div className="content__col content__col-medium">
+                <div className='content__currentDate'>{currentDate}</div>
                     <div className='content__row-default'>
+                        
                         <div className="content__col-default">
                             <h1 className='content__main-title'>{currentWeather.data.weather[0].main}</h1>
                             <div className='content__currentWeather'>
@@ -117,16 +153,6 @@ const Main = (props) => {
                 {weather.map((item, index) => {
                     return <WeatherBlock id={index} title={item.weather[0].main} icon={item.weather[0].icon} weather={weather} />
                 })}
-
-                {/* <WeatherBlock title={'Place'} icon={homeIcon} weather={`${weather.name}, ${weather.sys.country}`} />
-                <WeatherBlock title={'Temperature'} icon={temp} weather={`${weather.main.temp}°`} />
-                <WeatherBlock title={'Feels like'} icon={temp_feels_like} weather={`${weather.main.feels_like}°`} />
-                <WeatherBlock title={'Humidity'} icon={humidity} weather={`${weather.main.humidity}%`} />
-                <WeatherBlock title={'Preassure'} icon={temp_feels_like} weather={`${weather.main.pressure} hPa`} />
-                <WeatherBlock title={'Max temperature'} icon={temp_max} weather={`${weather.main.temp_max}°`} />
-                <WeatherBlock title={'Min temperature'} icon={temp_min} weather={`${weather.main.temp_min}°`} />
-                <WeatherBlock title={weather.weather[0].main} icon={weatherIcon} weather={weather.weather[0].description} />
-                <WeatherBlock title={'Visibility'} icon={visibility} weather={`${weather.visibility} m`} /> */}
             </div>
         </div>
     )

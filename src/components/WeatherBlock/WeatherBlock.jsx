@@ -9,10 +9,38 @@ const WeatherBlock = ({
 }) => {
 
     const [isFull, changeList] = useState(false);
+    let wd;
+   
+
+    switch (new Date(weather[id].dt * 1000).getDay()) {
+        case 1:
+            wd = 'Mon';
+            break;
+        case 2:
+            wd = 'Tue';
+            break;
+        case 3:
+            wd = 'Wed';
+            break;
+        case 4:
+            wd = 'Thu';
+            break;
+        case 5:
+            wd = 'Fri';
+            break;
+        case 6:
+            wd = 'Sat';
+            break;
+        case 0:
+            wd = 'Sun';
+            break;   
+    }
 
     return (
         <div className='weatherBlock__block'>
+            <div className='weatherBlock__date'>{wd}</div>
             <div className='weatherBlock__title'>
+                
                 {title}
                 <img src={`http://openweathermap.org/img/wn/${icon}.png`} alt="" />
             </div>
