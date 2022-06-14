@@ -34,6 +34,7 @@
         color: darkslategray;
         font-weight: 500;
         text-align: center;
+        min-height: 28px;
     }
 
     &__title {
@@ -49,7 +50,7 @@
     &__content {
         display: flex;
         flex-direction: column;
-        
+        // height: 100%;
         justify-content: center;
         
 
