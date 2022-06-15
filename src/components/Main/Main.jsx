@@ -10,7 +10,7 @@ import humidity from './../../assets/images/humidity.png';
 import visibility from './../../assets/images/visibility.png';
 import weatherIcon from './../../assets/images/weather.png';
 import WeatherBlock from '../WeatherBlock/WeatherBlock';
-import header_logo from './../../assets/images/header-logo.png';
+import Header from './../Header/Header';
 
 const Main = (props) => {
 
@@ -18,33 +18,27 @@ const Main = (props) => {
     const [currentWeather, setCurrentWeather] = useState(null);
     const [currentLanguage, setCurrentLanguage] = useState('en');
 
-    let currentCity = 'Moscow';
-    // let currentLanguage = 'eng';
     const api = 'd779f17843098d3158c1d2a9115ce239';
-    let arr = [];
+    let currentCity = 'Moscow';
+    let weatherForecast = [];
     let currentDate;
 
-
     const searchCity = () => {
-
         axios.get(`https://api.openweathermap.org/geo/1.0/direct?q=${currentCity}&appid=${api}`).then(city => {
-
             axios.get(`https://api.openweathermap.org/data/2.5/weather?lat=${city.data[0].lat}&lon=${city.data[0].lon}&appid=${api}&units=metric&lang=${currentLanguage}`).then(response => {
                 setCurrentWeather(response)
             })
             axios.get(`https://api.openweathermap.org/data/2.5/onecall?lat=${city.data[0].lat}&lon=${city.data[0].lon}&appid=${api}&units=metric&lang=${currentLanguage}`).then(response => {
                 for (let i = 0; i < 7; i++) {
-                    arr[i] = response.data.daily[i]
+                    weatherForecast[i] = response.data.daily[i]
                 }
-                setWeather(arr)
-
+                setWeather(weatherForecast)
             })
         })
-
     }
 
     useEffect(() => {
-        searchCity(currentCity)
+        searchCity()
     }, [currentLanguage])
 
     if (!weather) {
@@ -52,7 +46,7 @@ const Main = (props) => {
     }
 
     if (weather) {
-        if (currentLanguage == 'ru') {
+        if (currentLanguage === 'ru') {
             for (let i = 0; i < 7; i++) {
                 switch (weather[i].weather[0].main) {
                     case 'Clouds':
@@ -73,117 +67,58 @@ const Main = (props) => {
                     case 'Thunderstorm':
                         weather[i].weather[0].main = 'Гроза';
                         break;
+                    default:
+                        break;
                 }
             }
         }
+
         switch (new Date(weather[0].dt * 1000).getDay()) {
             case 1:
-                if (currentLanguage == 'en') {
-                    currentDate = 'Monday';
-                } else if (currentLanguage == 'ru') {
-                    currentDate = 'Понедельник';
-                }
-
+                currentLanguage === 'en' ? currentDate = 'Monday' : currentDate = 'Понедельник';
                 break;
             case 2:
-
-                if (currentLanguage == 'en') {
-                    currentDate = 'Tuesday';
-                } else if (currentLanguage == 'ru') {
-                    currentDate = 'Вторник';
-                }
+                currentLanguage === 'en' ? currentDate = 'Tuesday' : currentDate = 'Вторник';
                 break;
             case 3:
-                if (currentLanguage == 'en') {
-                    currentDate = 'Wednesday';
-                } else if (currentLanguage == 'ru') {
-                    currentDate = 'Среда';
-                }
-
+                currentLanguage === 'en' ? currentDate = 'Wednesday' : currentDate = 'Среда';
                 break;
             case 4:
-                if (currentLanguage == 'en') {
-                    currentDate = 'Thursday';
-                } else if (currentLanguage == 'ru') {
-                    currentDate = 'Четверг';
-                }
-
+                currentLanguage === 'en' ? currentDate = 'Thursday' : currentDate = 'Четверг';
                 break;
             case 5:
-                if (currentLanguage == 'en') {
-                    currentDate = 'Friday';
-                } else if (currentLanguage == 'ru') {
-                    currentDate = 'Пятница';
-                }
-
+                currentLanguage === 'en' ? currentDate = 'Friday' : currentDate = 'Пятница';
                 break;
             case 6:
-                if (currentLanguage == 'en') {
-                    currentDate = 'Saturday';
-                } else if (currentLanguage == 'ru') {
-                    currentDate = 'Суббота';
-                }
-
+                currentLanguage === 'en' ? currentDate = 'Saturday' : currentDate = 'Суббота';
                 break;
             case 0:
-                if (currentLanguage == 'en') {
-                    currentDate = 'Sunday';
-                } else if (currentLanguage == 'ru') {
-                    currentDate = 'Воскресенье';
-                }
-
+                currentLanguage === 'en' ? currentDate = 'Sunday' : currentDate = 'Воскресенье';
+                break;
+            default:
                 break;
         }
     }
-
-    // if (weather && currentLanguage == 'ru') {
-    //     switch(item.weather[0].main) {
-
-    //     }
-    // }
-
-
-
-
 
     const onChangeCity = (e) => {
         currentCity = e.currentTarget.value;
     }
 
     const onChangeLanguage = (e) => {
-        // currentLanguage = e.currentTarget.value;
         setCurrentLanguage(e.currentTarget.value);
 
     }
 
     return (
         <div className="content">
-            <header className="content__header">
-                <div className="content__logo">
-                    <img src={header_logo} width='50px' alt="" />
-                    <span>Weather App</span>
-                </div>
+            <Header currentLanguage={currentLanguage}
+             onChangeCity={onChangeCity}
+             searchCity={searchCity}
+             onChangeLanguage={onChangeLanguage}/>
 
-                <div className='content__search-block'>
-                    <div className='content__language'>
-                        <select onChange={onChangeLanguage}>
-                            <option value="en">en</option>
-                            <option value="ru">ru</option>
-                        </select>
-                    </div>
-                    <input className='content__search' placeholder={currentLanguage == 'en'
-                        ? 'City name'
-                        : 'Название города'} type="search" onChange={onChangeCity} />
-                    <button className='content__search-btn' onClick={searchCity}>
-                        {currentLanguage == 'en'
-                            ? 'Search'
-                            : 'Поиск'}
-                    </button>
-                </div>
-            </header>
             <div className="content__row content__current">
-                {console.log(weather)}
-                {console.log(currentWeather)}
+                {/* {console.log(weather)}
+                {console.log(currentWeather)} */}
                 <div className="content__col content__col-medium">
                     <div className='content__currentDate'>{currentDate}</div>
                     <div className='content__row-default'>
@@ -201,7 +136,9 @@ const Main = (props) => {
                             <img src={`http://openweathermap.org/img/wn/${currentWeather.data.weather[0].icon}@2x.png`} alt="" />
                         </div>
                     </div>
-                    <div className='content__currentCity'>{currentWeather.data.name}, {currentWeather.data.sys.country}</div>
+                    <div className='content__currentCity'>
+                        {currentWeather.data.name}, {currentWeather.data.sys.country}
+                    </div>
                 </div>
                 <div className="content__col content__col-big">
                     <h2 className='content__description'>
@@ -210,46 +147,32 @@ const Main = (props) => {
                     <ul>
                         <li>
                             <img src={temp_feels_like} width='16' alt="" />
-                            <div>{currentLanguage == 'en'
+                            <div>{currentLanguage === 'en'
                                 ? 'Feels like'
                                 : 'Ощущается как'}: <span>{currentWeather.data.main.feels_like}°</span>
                             </div>
                         </li>
-                        {/* <li>
-                            <img src={temp_max} width='16' alt="" />
-                            <div>{currentLanguage == 'en'
-                                ? 'Max temperature'
-                                : 'Максимальная температура'}: <span>{currentWeather.data.main.temp_max}°</span>
-                            </div>
-                        </li>
-                        <li>
-                            <img src={temp_min} width='16' alt="" />
-                            <div>{currentLanguage == 'en'
-                                ? 'Min temperature'
-                                : 'Минимальная температура'}: <span>{currentWeather.data.main.temp_min}°</span>
-                            </div>
-                        </li> */}
                         <li>
                             <img src={humidity} width='16' alt="" />
-                            <div>{currentLanguage == 'en'
+                            <div>{currentLanguage === 'en'
                                 ? 'Humidity'
                                 : 'Влажность'}: <span>{currentWeather.data.main.humidity}%</span>
                             </div>
                         </li>
                         <li>
                             <img src={temp_feels_like} width='16' alt="" />
-                            <div>{currentLanguage == 'en'
+                            <div>{currentLanguage === 'en'
                                 ? 'Preassure'
-                                : 'Давление'}: <span>{currentWeather.data.main.pressure} {currentLanguage == 'en'
+                                : 'Давление'}: <span>{currentWeather.data.main.pressure} {currentLanguage === 'en'
                                     ? 'chPa'
                                     : 'гПа'}</span>
                             </div>
                         </li>
                         <li>
                             <img src={visibility} width='16' alt="" />
-                            <div>{currentLanguage == 'en'
+                            <div>{currentLanguage === 'en'
                                 ? 'Visibility'
-                                : 'Видимость'}: <span>{currentWeather.data.visibility} {currentLanguage == 'en'
+                                : 'Видимость'}: <span>{currentWeather.data.visibility} {currentLanguage === 'en'
                                     ? 'm'
                                     : 'м'}</span>
                             </div>
@@ -260,6 +183,7 @@ const Main = (props) => {
             <div className="content__row content__forecast">
                 {weather.map((item, index) => {
                     return <WeatherBlock
+                        key={index}
                         id={index}
                         title={item.weather[0].main}
                         icon={item.weather[0].icon}
