@@ -5,14 +5,19 @@ const Header = ({
     currentLanguage,
     onChangeLanguage,
     onChangeCity,
-    searchCity
+    searchCity,
+    changeMode,
+    darkMode
 }) => {
 
     return (
-        <header className="header">
-            <div className="header__logo">
+        <header className={!darkMode ? "header header__background-white" : "header header__background-dark"}>
+            <div className={!darkMode ? "header__logo" : "header__logo header__logo-dark"}>
                 <img src={header_logo} width='50px' alt="" />
                 <span>Weather App</span>
+                <div className="header__nightMode">
+                    <span><input type="checkbox" onChange={!darkMode ? () => changeMode(true) : () => changeMode(false)}/></span>
+                </div>
             </div>
             <div className='header__search-block'>
                 <div className='header__language'>

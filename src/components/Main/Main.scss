@@ -56,6 +56,11 @@
         }
     }
 
+    &__col-dark {
+        background: rgb(70, 120, 120);
+        box-shadow: 2px 2px 2px rgb(50, 75, 75);
+    }
+
     &__col:hover {
         transition: 0.3s;
         transform: scale(1.01);
@@ -91,7 +96,7 @@
     &__forecast {
         align-items: baseline;
      
-        @media (max-width: 900px) {
+        @media (max-width: 950px) {
             flex-direction: column;
         }
     }
@@ -111,9 +116,7 @@
         margin: 5px;
         color: darkslategrey;
         display: flex;
-        justify-content: space-between;
-
-        
+        justify-content: space-between;   
     }
 
     &__col-big ul li div {
@@ -137,5 +140,21 @@
         color: darkslategrey;
         font-weight: 600;
         font-size: 24px;
+    }
+
+    &__currentWeather-dark {
+        color: lightblue;
+    }
+
+    &__dark-mode-text {
+        color: white;
+    }
+
+    &__dark-mode-text li div{
+        color: white;
+
+        span {
+            color: lightblue;
+        }
     }
 }

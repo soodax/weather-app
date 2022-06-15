@@ -1,16 +1,17 @@
 import './App.scss';
 import './nullstyle.scss';
 import Main from './components/Main/Main';
-import Header from './components/Header/Header';
+import { useState } from 'react';
 
 function App() {
-  return (
-    <div className="App">
-      <div className='wrapper'>
-        {/* <Header /> */}
-        <Main />
-      </div>
 
+  const [darkMode, changeMode] = useState(false);
+
+  return (
+    <div className={!darkMode ? 'app-color-white' : 'app-color-dark'}>
+      <div className='wrapper'>
+        <Main darkMode={darkMode} changeMode={changeMode}/>
+      </div>
     </div>
   );
 }

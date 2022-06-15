@@ -12,11 +12,15 @@ import weatherIcon from './../../assets/images/weather.png';
 import WeatherBlock from '../WeatherBlock/WeatherBlock';
 import Header from './../Header/Header';
 
-const Main = (props) => {
+const Main = ({
+    darkMode,
+    changeMode
+}) => {
 
     const [weather, setWeather] = useState(null);
     const [currentWeather, setCurrentWeather] = useState(null);
     const [currentLanguage, setCurrentLanguage] = useState('en');
+
 
     const api = 'd779f17843098d3158c1d2a9115ce239';
     let currentCity = 'Moscow';
@@ -112,22 +116,33 @@ const Main = (props) => {
     return (
         <div className="content">
             <Header currentLanguage={currentLanguage}
-             onChangeCity={onChangeCity}
-             searchCity={searchCity}
-             onChangeLanguage={onChangeLanguage}/>
+                onChangeCity={onChangeCity}
+                searchCity={searchCity}
+                onChangeLanguage={onChangeLanguage}
+                changeMode={changeMode}
+                darkMode={darkMode} />
 
             <div className="content__row content__current">
                 {/* {console.log(weather)}
                 {console.log(currentWeather)} */}
-                <div className="content__col content__col-medium">
-                    <div className='content__currentDate'>{currentDate}</div>
+                <div className={!darkMode
+                    ? "content__col content__col-medium"
+                    : "content__col content__col-medium content__col-dark"}>
+                    <div className={!darkMode
+                        ? 'content__currentDate'
+                        : 'content__currentDate content__dark-mode-text'}>
+                        {currentDate}
+                    </div>
                     <div className='content__row-default'>
-
                         <div className="content__col-default">
-                            <h1 className='content__main-title'>
+                            <h1 className={!darkMode
+                                ? 'content__main-title'
+                                : 'content__main-title content__dark-mode-text'}>
                                 {weather[0].weather[0].main}
                             </h1>
-                            <div className='content__currentWeather'>
+                            <div className={!darkMode
+                                ? 'content__currentWeather'
+                                : 'content__currentWeather content__currentWeather-dark'}>
                                 {currentWeather.data.main.temp}°
                             </div>
 
@@ -136,15 +151,23 @@ const Main = (props) => {
                             <img src={`http://openweathermap.org/img/wn/${currentWeather.data.weather[0].icon}@2x.png`} alt="" />
                         </div>
                     </div>
-                    <div className='content__currentCity'>
+                    <div className={!darkMode
+                        ? 'content__currentCity'
+                        : 'content__currentCity content__dark-mode-text'}>
                         {currentWeather.data.name}, {currentWeather.data.sys.country}
                     </div>
                 </div>
-                <div className="content__col content__col-big">
-                    <h2 className='content__description'>
+                <div className={!darkMode
+                    ? "content__col content__col-big"
+                    : 'content__col content__col-big content__col-dark'}>
+                    <h2 className={!darkMode
+                        ? 'content__description'
+                        : 'content__description content__dark-mode-text'}>
                         {currentWeather.data.weather[0].description}
                     </h2>
-                    <ul>
+                    <ul className={!darkMode
+                        ? null
+                        : 'content__dark-mode-text'}>
                         <li>
                             <img src={temp_feels_like} width='16' alt="" />
                             <div>{currentLanguage === 'en'
@@ -164,7 +187,7 @@ const Main = (props) => {
                             <div>{currentLanguage === 'en'
                                 ? 'Preassure'
                                 : 'Давление'}: <span>{currentWeather.data.main.pressure} {currentLanguage === 'en'
-                                    ? 'chPa'
+                                    ? 'hPa'
                                     : 'гПа'}</span>
                             </div>
                         </li>
@@ -188,7 +211,8 @@ const Main = (props) => {
                         title={item.weather[0].main}
                         icon={item.weather[0].icon}
                         weather={weather}
-                        currentLanguage={currentLanguage} />
+                        currentLanguage={currentLanguage}
+                        darkMode={darkMode} />
                 })}
             </div>
         </div>

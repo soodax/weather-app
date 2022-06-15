@@ -6,7 +6,8 @@ const WeatherBlock = ({
     title,
     icon,
     weather,
-    currentLanguage
+    currentLanguage,
+    darkMode
 }) => {
 
     const [isFull, changeList] = useState(false);
@@ -39,18 +40,27 @@ const WeatherBlock = ({
     }
 
     return (
-        <div className='weatherBlock__block'>
+        <div className={!darkMode
+            ? 'weatherBlock__block'
+            : 'weatherBlock__block weatherBlock__block-dark'}>
             <div className='weatherBlock__date'>{wd}</div>
-            <div className='weatherBlock__title'>
-
+            <div className={!darkMode
+                ? 'weatherBlock__title'
+                : 'weatherBlock__title weatherBlock__title-dark'}>
                 {title}
                 <img src={`http://openweathermap.org/img/wn/${icon}.png`} alt="" />
             </div>
-            <div className="weatherBlock__content">
-                <h2 className='weatherBlock__description'>
+            <div className={!darkMode
+                ? "weatherBlock__content"
+                : "weatherBlock__content weatherBlock__content-dark"}>
+                <h2 className={!darkMode
+                    ? 'weatherBlock__description'
+                    : 'weatherBlock__description weatherBlock__description-dark'}>
                     {weather[id].weather[0].description}
                 </h2>
-                <ul className='weatherBlock__shortList'>
+                <ul className={!darkMode
+                    ? 'weatherBlock__shortList'
+                    : 'weatherBlock__shortList weatherBlock__shortList-dark'}>
                     <li>{currentLanguage === 'en'
                         ? 'Morning'
                         : 'Утро'}: <span>{weather[id].temp.morn}°</span>
@@ -70,7 +80,9 @@ const WeatherBlock = ({
                 </ul>
                 {!isFull
                     ? null
-                    : <ul className='weatherBlock__fullList'>
+                    : <ul className={!darkMode
+                        ? 'weatherBlock__fullList'
+                        : 'weatherBlock__fullList weatherBlock__shortList-dark'}>
                         <li>{currentLanguage === 'en'
                             ? 'Max'
                             : 'Максимум'}: <span>{weather[id].temp.max}°</span>
