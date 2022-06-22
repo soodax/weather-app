@@ -169,21 +169,21 @@ const Main = ({
                         ? null
                         : 'content__dark-mode-text'}>
                         <li>
-                            <img src={temp_feels_like} width='16' alt="" />
+                            <img className='content__icon' src={temp} alt="" />
                             <div>{currentLanguage === 'en'
                                 ? 'Feels like'
                                 : 'Ощущается как'}: <span>{currentWeather.data.main.feels_like}°</span>
                             </div>
                         </li>
                         <li>
-                            <img src={humidity} width='16' alt="" />
+                            <img className='content__icon' src={humidity} alt="" />
                             <div>{currentLanguage === 'en'
                                 ? 'Humidity'
                                 : 'Влажность'}: <span>{currentWeather.data.main.humidity}%</span>
                             </div>
                         </li>
                         <li>
-                            <img src={temp_feels_like} width='16' alt="" />
+                            <img className='content__icon' src={temp_feels_like} alt="" />
                             <div>{currentLanguage === 'en'
                                 ? 'Preassure'
                                 : 'Давление'}: <span>{currentWeather.data.main.pressure} {currentLanguage === 'en'
@@ -192,7 +192,7 @@ const Main = ({
                             </div>
                         </li>
                         <li>
-                            <img src={visibility} width='16' alt="" />
+                            <img className='content__icon' src={visibility} alt="" />
                             <div>{currentLanguage === 'en'
                                 ? 'Visibility'
                                 : 'Видимость'}: <span>{currentWeather.data.visibility} {currentLanguage === 'en'
