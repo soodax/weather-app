@@ -58,10 +58,27 @@
         left: 20px;
     }
 
-
     &__language {
+        transition: 0.3s;
+        border: 0px transparent;
+        border-radius: 5px;
         display: flex;
         margin: 0 5px 0 0;
+        background: lightblue;
+        color: darkslategrey;
+        cursor: pointer;
+
+        select {
+            appearance: none;
+            cursor: pointer;
+            background: lightblue;
+            color: darkslategrey;
+            padding: 0 15px;
+            border: 0px transparent;
+            border-radius: 5px;
+            font-weight: 600;
+            position: relative;
+        }
     }
 
     &__logo {
@@ -118,7 +135,6 @@
     }
 
     &__search-btn:hover {
-        transition: 0.3s;
         background: darkcyan;
         color: white;
     }

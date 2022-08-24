@@ -30,7 +30,6 @@
     }
 
     &__block:hover {
-        transition: 0.3s;
         transform: scale(1.05);
         outline: 1px solid lightblue;
     }
@@ -119,7 +118,6 @@
     }
 
     &__btn:hover {
-        transition: 0.3s;
         background: darkcyan;
         color: white
     }

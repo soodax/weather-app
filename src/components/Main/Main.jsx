@@ -1,16 +1,13 @@
 import './Main.scss';
 import * as axios from "axios";
 import { useEffect, useState } from "react";
-import homeIcon from './../../assets/images/home.png';
 import temp from './../../assets/images/temp.png';
-import temp_max from './../../assets/images/temp_max.png';
-import temp_min from './../../assets/images/temp_min.png';
 import temp_feels_like from './../../assets/images/temp_feels_like.png';
 import humidity from './../../assets/images/humidity.png';
 import visibility from './../../assets/images/visibility.png';
-import weatherIcon from './../../assets/images/weather.png';
 import WeatherBlock from '../WeatherBlock/WeatherBlock';
 import Header from './../Header/Header';
+import Preloader from '../../assets/images/preloader.gif';
 
 const Main = ({
     darkMode,
@@ -20,7 +17,6 @@ const Main = ({
     const [weather, setWeather] = useState(null);
     const [currentWeather, setCurrentWeather] = useState(null);
     const [currentLanguage, setCurrentLanguage] = useState('en');
-
 
     const api = 'd779f17843098d3158c1d2a9115ce239';
     let currentCity = 'Moscow';
@@ -42,11 +38,11 @@ const Main = ({
     }
 
     useEffect(() => {
-        searchCity()
+        searchCity();
     }, [currentLanguage])
 
     if (!weather) {
-        return <div>loading...</div>
+        return <div className='preloader'><img  src={Preloader} alt="loading..." /></div>
     }
 
     if (weather) {
@@ -123,8 +119,6 @@ const Main = ({
                 darkMode={darkMode} />
 
             <div className="content__row content__current">
-                {/* {console.log(weather)}
-                {console.log(currentWeather)} */}
                 <div className={!darkMode
                     ? "content__col content__col-medium"
                     : "content__col content__col-medium content__col-dark"}>

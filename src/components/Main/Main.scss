@@ -62,7 +62,6 @@
     }
 
     &__col:hover {
-        transition: 0.3s;
         transform: scale(1.01);
         outline: 1px solid lightblue;
 
@@ -81,10 +80,10 @@
     &__col-medium {
         flex: 1 1 40%;
         margin: 0 10px 0 0;
+
         @media (max-width: 500px) {
             margin: 0 0 10px 0;
         }
-        
     }
 
     &__current {
@@ -162,4 +161,17 @@
         max-width: 16px;
         max-height: 16px;
     }
+}
+
+.preloader {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+
+    img {
+        max-width: 128px;
+        max-height: 128px;
+    }
+    
 }

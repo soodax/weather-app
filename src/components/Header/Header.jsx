@@ -16,7 +16,11 @@ const Header = ({
                 <img src={header_logo} width='50px' alt="" />
                 <span>Weather App</span>
                 <div className="header__nightMode">
-                    <span><input type="checkbox" onChange={!darkMode ? () => changeMode(true) : () => changeMode(false)}/></span>
+                    <span>
+                        <input type="checkbox" onChange={!darkMode
+                            ? () => changeMode(true)
+                            : () => changeMode(false)} />
+                    </span>
                 </div>
             </div>
             <div className='header__search-block'>
