@@ -17,24 +17,41 @@ const Main = ({
     const [weather, setWeather] = useState(null);
     const [currentWeather, setCurrentWeather] = useState(null);
     const [currentLanguage, setCurrentLanguage] = useState('en');
+    const [currentCity, setCurrentCity] = useState('');
 
     const api = 'd779f17843098d3158c1d2a9115ce239';
-    let currentCity = 'Moscow';
-    let weatherForecast = [];
     let currentDate;
 
-    const searchCity = () => {
-        axios.get(`https://api.openweathermap.org/geo/1.0/direct?q=${currentCity}&appid=${api}`).then(city => {
-            axios.get(`https://api.openweathermap.org/data/2.5/weather?lat=${city.data[0].lat}&lon=${city.data[0].lon}&appid=${api}&units=metric&lang=${currentLanguage}`).then(response => {
-                setCurrentWeather(response)
-            })
-            axios.get(`https://api.openweathermap.org/data/2.5/onecall?lat=${city.data[0].lat}&lon=${city.data[0].lon}&appid=${api}&units=metric&lang=${currentLanguage}`).then(response => {
-                for (let i = 0; i < 7; i++) {
-                    weatherForecast[i] = response.data.daily[i]
-                }
-                setWeather(weatherForecast)
-            })
-        })
+    const getData = async (geolocation) => {
+        let city = await axios.get(`https://api.openweathermap.org/geo/1.0/direct?q=${geolocation}&appid=${api}`)
+        
+        let resCurrentWeather = await axios.get(`https://api.openweathermap.org/data/2.5/weather?lat=${city.data[0].lat}&lon=${city.data[0].lon}&appid=${api}&units=metric&lang=${currentLanguage}`)
+        setCurrentWeather(resCurrentWeather)
+        
+        let resWeatherForecast = await axios.get(`https://api.openweathermap.org/data/2.5/onecall?lat=${city.data[0].lat}&lon=${city.data[0].lon}&appid=${api}&units=metric&lang=${currentLanguage}`)
+        let weatherForecast = [];
+        for (let i = 0; i < 7; i++) {
+            weatherForecast[i] = resWeatherForecast.data.daily[i]
+        }
+        setWeather(weatherForecast)
+    }
+
+    const searchCity = async () => {       
+        if (!currentCity) {          
+            if (navigator.geolocation && navigator.canShare()) {              
+                navigator.geolocation.getCurrentPosition(async (position) => {                   
+                    let location = await axios.get(`https://api.openweathermap.org/geo/1.0/reverse?lat=${position.coords.latitude}&lon=${position.coords.longitude}&appid=${api}`)
+                    setCurrentCity(location.data[0].name)    
+                    getData(location.data[0].name)
+                }); 
+            } else {                
+                // alert("Geolocation is not supported by this browser.");
+                setCurrentCity('Moscow');
+                getData('Moscow');
+            }
+        } else {
+            getData(currentCity);
+        } 
     }
 
     useEffect(() => {
@@ -101,12 +118,11 @@ const Main = ({
     }
 
     const onChangeCity = (e) => {
-        currentCity = e.currentTarget.value;
+        setCurrentCity(e.currentTarget.value)      
     }
 
     const onChangeLanguage = (e) => {
         setCurrentLanguage(e.currentTarget.value);
-
     }
 
     return (
