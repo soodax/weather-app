@@ -38,19 +38,31 @@ const Main = ({
 
     const searchCity = async () => {       
         if (!currentCity) {          
-            if (navigator.geolocation && navigator.canShare()) {              
+            if (navigator.geolocation) {              
                 navigator.geolocation.getCurrentPosition(async (position) => {                   
                     let location = await axios.get(`https://api.openweathermap.org/geo/1.0/reverse?lat=${position.coords.latitude}&lon=${position.coords.longitude}&appid=${api}`)
                     setCurrentCity(location.data[0].name)    
                     getData(location.data[0].name)
-                }); 
+                    console.log(location.data[0].name)
+                    console.log('geo base city')
+                },
+                function(error) {
+                    if(error.PERMISSION_DENIED || error.POSITION_UNAVAILABLE || error.TIMEOUT) {
+                        // alert("В доступе отказано!");
+                        setCurrentCity('Moscow');
+                        getData('Moscow');
+                        console.log('default base city rejected')
+                    }
+        }); 
             } else {                
                 // alert("Geolocation is not supported by this browser.");
                 setCurrentCity('Moscow');
                 getData('Moscow');
+                console.log('default base city')
             }
         } else {
             getData(currentCity);
+            console.log('state city')
         } 
     }
 
@@ -153,7 +165,7 @@ const Main = ({
                             <div className={!darkMode
                                 ? 'content__currentWeather'
                                 : 'content__currentWeather content__currentWeather-dark'}>
-                                {currentWeather.data.main.temp}°
+                                {Math.round(currentWeather.data.main.temp)}°
                             </div>
 
                         </div>
@@ -182,7 +194,7 @@ const Main = ({
                             <img className='content__icon' src={temp} alt="" />
                             <div>{currentLanguage === 'en'
                                 ? 'Feels like'
-                                : 'Ощущается как'}: <span>{currentWeather.data.main.feels_like}°</span>
+                                : 'Ощущается как'}: <span>{Math.round(currentWeather.data.main.feels_like)}°</span>
                             </div>
                         </li>
                         <li>

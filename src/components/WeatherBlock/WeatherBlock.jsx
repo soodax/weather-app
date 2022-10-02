@@ -63,19 +63,19 @@ const WeatherBlock = ({
                     : 'weatherBlock__shortList weatherBlock__shortList-dark'}>
                     <li>{currentLanguage === 'en'
                         ? 'Morning'
-                        : 'Утро'}: <span>{weather[id].temp.morn}°</span>
+                        : 'Утро'}: <span>{Math.round(weather[id].temp.morn)}°</span>
                     </li>
                     <li>{currentLanguage === 'en'
                         ? 'Day'
-                        : 'День'}: <span>{weather[id].temp.day}°</span>
+                        : 'День'}: <span>{Math.round(weather[id].temp.day)}°</span>
                     </li>
                     <li>{currentLanguage === 'en'
                         ? 'Evening'
-                        : 'Вечер'}: <span>{weather[id].temp.eve}°</span>
+                        : 'Вечер'}: <span>{Math.round(weather[id].temp.eve)}°</span>
                     </li>
                     <li>{currentLanguage === 'en'
                         ? 'Night'
-                        : 'Ночь'}: <span>{weather[id].temp.night}°</span>
+                        : 'Ночь'}: <span>{Math.round(weather[id].temp.night)}°</span>
                     </li>
                 </ul>
                 {!isFull
@@ -85,11 +85,11 @@ const WeatherBlock = ({
                         : 'weatherBlock__fullList weatherBlock__shortList-dark'}>
                         <li>{currentLanguage === 'en'
                             ? 'Max'
-                            : 'Максимум'}: <span>{weather[id].temp.max}°</span>
+                            : 'Максимум'}: <span>{Math.round(weather[id].temp.max)}°</span>
                         </li>
                         <li>{currentLanguage === 'en'
                             ? 'Min'
-                            : 'Минимум'}: <span>{weather[id].temp.min}°</span>
+                            : 'Минимум'}: <span>{Math.round(weather[id].temp.min)}°</span>
                         </li>
                         <li>{currentLanguage === 'en'
                             ? 'Humidity'
