@@ -19,7 +19,7 @@ const Main = ({
     const [currentLanguage, setCurrentLanguage] = useState('en');
     const [currentCity, setCurrentCity] = useState('');
 
-    const api = 'd779f17843098d3158c1d2a9115ce239';
+    const api = process.env.REACT_APP_API_KEY
     const mainURL = 'https://api.openweathermap.org/';
     let currentDate;
 
