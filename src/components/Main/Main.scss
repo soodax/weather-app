@@ -41,8 +41,6 @@
 
     &__col {
         transition: 0.3s;
-        // box-shadow: 0 0 3px rgb(230, 235, 235);
-        // box-shadow: 0 0 3px grey;
         box-shadow: 0 0 3px rgb(160, 160, 160);
         border-radius: 10px;
         display: flex;
@@ -64,8 +62,7 @@
 
     &__col:hover {
         transform: scale(1.01);
-        // outline: 1px solid lightblue;
-
+        
         @media (max-width: 900px) {
             transform: none;
         }
@@ -95,9 +92,11 @@
 
     &__forecast {
         align-items: baseline;
+        gap: 5px;
      
         @media (max-width: 950px) {
             flex-direction: column;
+            gap: 10px;
         }
     }
 

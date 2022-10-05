@@ -20,19 +20,22 @@ const Main = ({
     const [currentCity, setCurrentCity] = useState('');
 
     const api = 'd779f17843098d3158c1d2a9115ce239';
+    const mainURL = 'https://api.openweathermap.org/';
     let currentDate;
 
     const getData = async (geolocation) => {
-        let city = await axios.get(`https://api.openweathermap.org/geo/1.0/direct?q=${geolocation}&appid=${api}`)
+        const city = await axios.get(`${mainURL}geo/1.0/direct?q=${geolocation}&appid=${api}`)
         
-        let resCurrentWeather = await axios.get(`https://api.openweathermap.org/data/2.5/weather?lat=${city.data[0].lat}&lon=${city.data[0].lon}&appid=${api}&units=metric&lang=${currentLanguage}`)
+        const resCurrentWeather = await axios.get(`${mainURL}data/2.5/weather?lat=${city.data[0].lat}&lon=${city.data[0].lon}&appid=${api}&units=metric&lang=${currentLanguage}`)
         setCurrentWeather(resCurrentWeather)
         
-        let resWeatherForecast = await axios.get(`https://api.openweathermap.org/data/2.5/onecall?lat=${city.data[0].lat}&lon=${city.data[0].lon}&appid=${api}&units=metric&lang=${currentLanguage}`)
-        let weatherForecast = [];
+        const resWeatherForecast = await axios.get(`${mainURL}data/2.5/onecall?lat=${city.data[0].lat}&lon=${city.data[0].lon}&appid=${api}&units=metric&lang=${currentLanguage}`)
+        const weatherForecast = [];
+
         for (let i = 0; i < 7; i++) {
             weatherForecast[i] = resWeatherForecast.data.daily[i]
         }
+        
         setWeather(weatherForecast)
     }
 
@@ -40,7 +43,7 @@ const Main = ({
         if (!currentCity) {          
             if (navigator.geolocation) {              
                 navigator.geolocation.getCurrentPosition(async (position) => {                   
-                    let location = await axios.get(`https://api.openweathermap.org/geo/1.0/reverse?lat=${position.coords.latitude}&lon=${position.coords.longitude}&appid=${api}`)
+                    const location = await axios.get(`${mainURL}geo/1.0/reverse?lat=${position.coords.latitude}&lon=${position.coords.longitude}&appid=${api}`)
                     setCurrentCity(location.data[0].name)    
                     getData(location.data[0].name)
                     console.log(location.data[0].name)
