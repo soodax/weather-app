@@ -1,0 +1,46 @@
+.sunInfo {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+
+    &__content {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 10px;
+
+        img {
+            max-width: 32px;
+        }
+        
+    }
+
+    &__time {
+        display: flex;
+        flex-direction: column;       
+        font-size: 16px;           
+        font-weight: 500;   
+        gap: 5px;  
+
+        span {
+            font-size: 18px;  
+        }
+    }
+
+    &__time-light {
+        color: darkcyan;
+
+        span {
+            color: darkslategrey;
+            
+        }
+    }
+
+    &__time-dark {
+        color: lightblue;
+
+        span {
+            color: white;         
+        }
+    }
+}

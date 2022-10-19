@@ -1,38 +1,19 @@
 .content {
-    &__main-title {
-        font-weight: 600;
-        font-size: 20px;
-        margin: 0 0 10px 0;
-        color: darkslategrey;
-    }
-
-    &__currentWeather {
-        font-weight: 700;
-        font-size: 18px;
-        color: darkcyan;
-    }
-
-    &__description {
-        font-weight: 500;
-        font-size: 18px;
-        color: darkslategrey;
-        margin: 0 0 5px 0;
-    }
-
-    &__currentCity {
-        font-weight: 500;
-        font-size: 18px;
-        color: darkslategrey;
-    }
 
     &__row {
         display: flex;
         justify-content: space-between;
         margin: 0 0 20px 0;
+        gap: 20px;
+
+        @media (max-width: 767px) {
+            gap: 10px;
+        }
 
         @media (max-width: 500px) {
             margin: 0;
         }
+        
     }
 
     &__row-default {
@@ -75,17 +56,10 @@
         justify-content: center;
     }
 
-    &__col-medium {
-        flex: 1 1 40%;
-        margin: 0 10px 0 0;
 
-        @media (max-width: 500px) {
-            margin: 0 0 10px 0;
-        }
-    }
 
     &__current {
-        @media (max-width: 500px) {
+        @media (max-width: 767px) {
             flex-direction: column;
         }
     }
@@ -100,16 +74,30 @@
         }
     }
 
-    &__col-big {
-        flex: 1 1 60%;
-        margin: 0 0 0 10px;
+    &__col-medium {
+        flex: 1 1 40%;
+        // margin: 0 10px 0 0;
 
         @media (max-width: 500px) {
             margin: 0 0 10px 0;
         }
     }
 
-    &__col-big ul li {
+    &__col-small {
+        flex: 1 1 30%;
+        // margin: 0 0 0 10px;
+
+        @media (max-width: 500px) {
+            margin: 0 0 10px 0;
+        }
+    }
+
+    // &__col-small div {
+    //     display: flex;
+    //     align-items: center;
+    // }
+
+    &__col-small ul li {
         font-weight: 500;
         font-size: 16;
         margin: 5px;
@@ -118,44 +106,23 @@
         justify-content: space-between;   
     }
 
-    &__col-big ul li div {
+    &__col-small ul li div {
         display: flex;
         justify-content: space-between;
         width: 100%;
     }
 
-    &__col-big ul li img {
+    &__col-small ul li img {
         margin: 0 5px 0 0;
     }
 
-    &__col-big ul li span {
+    &__col-small ul li span {
         color: darkcyan;
         font-weight: 700;
         margin: 0 0 0 5px;
     }
 
-    &__currentDate {
-        text-align: center;
-        color: darkslategrey;
-        font-weight: 600;
-        font-size: 24px;
-    }
 
-    &__currentWeather-dark {
-        color: lightblue;
-    }
-
-    &__dark-mode-text {
-        color: white;
-    }
-
-    &__dark-mode-text li div{
-        color: white;
-
-        span {
-            color: lightblue;
-        }
-    }
 
     &__icon {
         max-width: 16px;

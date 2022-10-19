@@ -13,7 +13,7 @@ const Header = ({
     return (
         <header className={!darkMode ? "header header__background-white" : "header header__background-dark"}>
             <div className={!darkMode ? "header__logo" : "header__logo header__logo-dark"}>
-                <img src={header_logo} width='50px' alt="" />
+                <img src={header_logo} alt="logo" />
                 <span>Weather App</span>
                 <div className="header__nightMode">
                     <span>

@@ -1,0 +1,21 @@
+.content {
+    &__description {
+        font-weight: 500;
+        font-size: 18px;
+        color: darkslategrey;
+        margin: 0 0 5px 0;
+        text-align: center;
+    }
+
+    &__dark-mode-text {
+        color: white;
+    }
+
+    &__dark-mode-text li div{
+        color: white;
+
+        span {
+            color: lightblue;
+        }
+    }
+}

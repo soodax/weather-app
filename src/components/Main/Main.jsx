@@ -1,13 +1,13 @@
 import './Main.scss';
 import * as axios from "axios";
 import { useEffect, useState } from "react";
-import temp from './../../assets/images/temp.png';
-import temp_feels_like from './../../assets/images/temp_feels_like.png';
-import humidity from './../../assets/images/humidity.png';
-import visibility from './../../assets/images/visibility.png';
 import WeatherBlock from '../WeatherBlock/WeatherBlock';
 import Header from './../Header/Header';
 import Preloader from '../../assets/images/preloader.gif';
+import MapComponent from '../MapComponent/MapComponent';
+import CurrentWeather from '../CurrentWeather/CurrentWeather';
+import AdditionalInfo from '../AdditionalInfo/AdditionalInfo';
+import SunInfo from '../SunInfo/SunInfo';
 
 const Main = ({
     darkMode,
@@ -18,36 +18,51 @@ const Main = ({
     const [currentWeather, setCurrentWeather] = useState(null);
     const [currentLanguage, setCurrentLanguage] = useState('en');
     const [currentCity, setCurrentCity] = useState('');
+    // const [mapData, setMapData] = useState('');
 
     const api = process.env.REACT_APP_API_KEY
     const mainURL = 'https://api.openweathermap.org/';
     let currentDate;
 
     const getData = async (geolocation) => {
-        const city = await axios.get(`${mainURL}geo/1.0/direct?q=${geolocation}&appid=${api}`)
-        
-        const resCurrentWeather = await axios.get(`${mainURL}data/2.5/weather?lat=${city.data[0].lat}&lon=${city.data[0].lon}&appid=${api}&units=metric&lang=${currentLanguage}`)
-        setCurrentWeather(resCurrentWeather)
-        
-        const resWeatherForecast = await axios.get(`${mainURL}data/2.5/onecall?lat=${city.data[0].lat}&lon=${city.data[0].lon}&appid=${api}&units=metric&lang=${currentLanguage}`)
-        const weatherForecast = [];
-
-        for (let i = 0; i < 7; i++) {
-            weatherForecast[i] = resWeatherForecast.data.daily[i]
+        try {
+            // const map = await axios.get(`https://tile.openweathermap.org/map/temp_new/1/1/1.png?appid=${api}`)
+            // console.log(map)
+            // setMapData(map)
+    
+            const city = await axios.get(`${mainURL}geo/1.0/direct?q=${geolocation}&appid=${api}`)
+            
+            const resCurrentWeather = await axios.get(`${mainURL}data/2.5/weather?lat=${city.data[0].lat}&lon=${city.data[0].lon}&appid=${api}&units=metric&lang=${currentLanguage}`)
+            setCurrentWeather(resCurrentWeather)
+            
+            const resWeatherForecast = await axios.get(`${mainURL}data/2.5/onecall?lat=${city.data[0].lat}&lon=${city.data[0].lon}&appid=${api}&units=metric&lang=${currentLanguage}`)
+            const weatherForecast = [];
+    
+            for (let i = 0; i < 7; i++) {
+                weatherForecast[i] = resWeatherForecast.data.daily[i]
+            }
+            
+            setWeather(weatherForecast)
+        } catch (error) {
+            alert(error)
         }
         
-        setWeather(weatherForecast)
     }
 
     const searchCity = async () => {       
         if (!currentCity) {          
             if (navigator.geolocation) {              
-                navigator.geolocation.getCurrentPosition(async (position) => {                   
-                    const location = await axios.get(`${mainURL}geo/1.0/reverse?lat=${position.coords.latitude}&lon=${position.coords.longitude}&appid=${api}`)
-                    setCurrentCity(location.data[0].name)    
-                    getData(location.data[0].name)
-                    console.log(location.data[0].name)
-                    console.log('geo base city')
+                navigator.geolocation.getCurrentPosition(async (position) => {       
+                    try {
+                        const location = await axios.get(`${mainURL}geo/1.0/reverse?lat=${position.coords.latitude}&lon=${position.coords.longitude}&appid=${api}`)
+                        setCurrentCity(location.data[0].name)    
+                        getData(location.data[0].name)
+                        console.log(location.data[0].name)
+                        console.log('geo base city')
+                    } catch (error) {
+                        alert(error)
+                    }       
+                    
                 },
                 function(error) {
                     if(error.PERMISSION_DENIED || error.POSITION_UNAVAILABLE || error.TIMEOUT) {
@@ -150,83 +165,21 @@ const Main = ({
                 darkMode={darkMode} />
 
             <div className="content__row content__current">
-                <div className={!darkMode
-                    ? "content__col content__col-medium"
-                    : "content__col content__col-medium content__col-dark"}>
-                    <div className={!darkMode
-                        ? 'content__currentDate'
-                        : 'content__currentDate content__dark-mode-text'}>
-                        {currentDate}
-                    </div>
-                    <div className='content__row-default'>
-                        <div className="content__col-default">
-                            <h1 className={!darkMode
-                                ? 'content__main-title'
-                                : 'content__main-title content__dark-mode-text'}>
-                                {weather[0].weather[0].main}
-                            </h1>
-                            <div className={!darkMode
-                                ? 'content__currentWeather'
-                                : 'content__currentWeather content__currentWeather-dark'}>
-                                {Math.round(currentWeather.data.main.temp)}°
-                            </div>
 
-                        </div>
-                        <div className="content__col-default">
-                            <img src={`http://openweathermap.org/img/wn/${currentWeather.data.weather[0].icon}@2x.png`} alt="" />
-                        </div>
-                    </div>
-                    <div className={!darkMode
-                        ? 'content__currentCity'
-                        : 'content__currentCity content__dark-mode-text'}>
-                        {currentWeather.data.name}, {currentWeather.data.sys.country}
-                    </div>
-                </div>
-                <div className={!darkMode
-                    ? "content__col content__col-big"
-                    : 'content__col content__col-big content__col-dark'}>
-                    <h2 className={!darkMode
-                        ? 'content__description'
-                        : 'content__description content__dark-mode-text'}>
-                        {currentWeather.data.weather[0].description}
-                    </h2>
-                    <ul className={!darkMode
-                        ? null
-                        : 'content__dark-mode-text'}>
-                        <li>
-                            <img className='content__icon' src={temp} alt="" />
-                            <div>{currentLanguage === 'en'
-                                ? 'Feels like'
-                                : 'Ощущается как'}: <span>{Math.round(currentWeather.data.main.feels_like)}°</span>
-                            </div>
-                        </li>
-                        <li>
-                            <img className='content__icon' src={humidity} alt="" />
-                            <div>{currentLanguage === 'en'
-                                ? 'Humidity'
-                                : 'Влажность'}: <span>{currentWeather.data.main.humidity}%</span>
-                            </div>
-                        </li>
-                        <li>
-                            <img className='content__icon' src={temp_feels_like} alt="" />
-                            <div>{currentLanguage === 'en'
-                                ? 'Preassure'
-                                : 'Давление'}: <span>{currentWeather.data.main.pressure} {currentLanguage === 'en'
-                                    ? 'hPa'
-                                    : 'гПа'}</span>
-                            </div>
-                        </li>
-                        <li>
-                            <img className='content__icon' src={visibility} alt="" />
-                            <div>{currentLanguage === 'en'
-                                ? 'Visibility'
-                                : 'Видимость'}: <span>{currentWeather.data.visibility} {currentLanguage === 'en'
-                                    ? 'm'
-                                    : 'м'}</span>
-                            </div>
-                        </li>
-                    </ul>
-                </div>
+                <CurrentWeather darkMode={darkMode}
+                    currentDate={currentDate}
+                    weather={weather}
+                    currentWeather={currentWeather}/>
+
+                <AdditionalInfo darkMode={darkMode}
+                    currentLanguage={currentLanguage}
+                    currentWeather={currentWeather}/>
+
+                <SunInfo darkMode={darkMode}
+                    currentWeather={currentWeather}
+                    currentLanguage={currentLanguage}/>
+
+
             </div>
             <div className="content__row content__forecast">
                 {weather.map((item, index) => {
@@ -240,6 +193,8 @@ const Main = ({
                         darkMode={darkMode} />
                 })}
             </div>
+            {/* <MapComponent mapData={mapData}/> */}
+
         </div>
     )
 }

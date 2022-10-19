@@ -1,0 +1,34 @@
+.content {
+
+    &__main-title {
+        font-weight: 600;
+        font-size: 20px;
+        margin: 0 0 10px 0;
+        color: darkslategrey;
+    }
+
+    &__currentCity {
+        font-weight: 500;
+        font-size: 18px;
+        color: darkslategrey;
+    }
+
+    &__currentWeather {
+        font-weight: 700;
+        font-size: 18px;
+        color: darkcyan;
+    }
+
+    &__currentWeather-dark {
+        color: lightblue;
+    }
+
+    &__currentDate {
+        text-align: center;
+        color: darkslategrey;
+        font-weight: 600;
+        font-size: 24px;
+    }
+
+
+}
